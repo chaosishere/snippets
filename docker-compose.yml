@@ -1,0 +1,23 @@
+services:
+  web:
+    build: .
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/code
+    command: python manage.py runserver 0.0.0.0:8000
+    container_name: django_container
+    depends_on:
+      - db
+  db:
+    image: postgres:16
+    volumes:
+    - postgres_data:/var/lib/postgresql/data/
+    environment:
+    - POSTGRES_DB=project_database
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=chaos789
+    container_name: postgres_container
+    
+volumes:
+  postgres_data:
